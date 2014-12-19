@@ -742,9 +742,17 @@ class DateTime(object):
             elif isinstance(arg, basestring):
                 # Date/time string
 
+                #CUSTOM
+                """
+                    Es wurde hier immer iso8601 erkannt, was dazu gefuehrt hat,
+                    dass die GMT immer 0 war. Im alten Zope wurde immer _parse
+                    angelaufen, wenn ein Datum aus eine relationalen Datenbank kam.
+                    Alte Bedingung wieder hergestellt.
                 iso8601 = iso8601Match(arg.strip())
                 fields_iso8601 = iso8601 and iso8601.groupdict() or {}
                 if fields_iso8601 and not fields_iso8601.get('garbage'):
+                """
+                if arg.find(' ')==-1 and arg[4]=='-':
                     yr, mo, dy, hr, mn, sc, tz, tznaive = \
                         self._parse_iso8601_preserving_tznaive(arg)
                     self._timezone_naive = tznaive
